@@ -1,0 +1,31 @@
+Script started on Tue 25 Sep 2018 01:21:47 PM EDT
+piers@Lenovoman-G50-45:~/Documents/MA305/classwork/CW3$ cat cw3.py
+#!/user/bin/env python3
+"""
+MA305 - Classwork 3: Piers Chapman 25SEP18
+Purpose: Evaluate the Euler's funtion of a integer 'n' that is inputted.
+"""
+"from math import *"
+
+def gcd(a,b):
+	while b:
+		a, b = b, a%b
+	return a
+
+n = int(input("n="))
+
+def phi(n):
+	result = 1
+	for i in range(2,n):
+		if (gcd(i,n) == 1):
+			result+=1
+	return result
+
+print(phi(n))
+piers@Lenovoman-G50-45:~/Documents/MA305/classwork/CW3$ chmod u+x cw3.py
+piers@Lenovoman-G50-45:~/Documents/MA305/classwork/CW3$ ./cw3.py
+bash: ./cw3.py: /user/bin/env: bad interpreter: No such file or directory
+piers@Lenovoman-G50-45:~/Documents/MA305/classwork/CW3$ exit
+exit
+
+Script done on Tue 25 Sep 2018 01:22:27 PM EDT
