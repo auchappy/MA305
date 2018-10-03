@@ -1,0 +1,86 @@
+Script started on Tue 02 Oct 2018 08:07:14 PM EDT
+piers@Lenovoman-G50-45:~/Documents/MA305/lab2$ cat lab2.py
+#!/user/bin/env python3
+"""
+
+MA305 - Lab 2 : Piers Chapman -02OCT18
+Purpose: To evaluate F(x) = a-b*(x**3) at N equidistant points in [0,1], and output the pairs (x, F(x)) on the screen and in the file "out.txt" for plotting.
+
+"""
+from math import *
+#Receive Input
+p=float(input('Number to find Sq. Root of:'))
+xnew=float(input('Guess:'))
+while(xnew<=0):
+	xnew=float(input('Guess > 0:'))
+
+#Compute root
+xold=xnew
+tol = 5*10**-15
+i=0
+while(True):
+	xnew=(xold+(p/xold))/2
+	abs_err_1 = abs(xold - xnew)
+	abs_err_2 = abs((xold- xnew)/xnew)
+	if(abs_err_1 < tol and abs_err_2 < tol ):
+		break
+	else:
+		xold=xnew
+		i=i+1
+		print('',i,'',xnew,'%.6f' % abs_err_1,'%.6f' % abs_err_2)
+
+piers@Lenovoman-G50-45:~/Documents/MA305/lab2$ python3 lab2.py
+Number to find Sq. Root of:4
+Guess:2
+piers@Lenovoman-G50-45:~/Documents/MA305/lab2$ python3 lab2.py
+Number to find Sq. Root of:44
+Guess:2
+ 1  12.0 10.000000 0.833333
+ 2  7.833333333333333 4.166667 0.531915
+ 3  6.725177304964539 1.108156 0.164777
+ 4  6.633877869460914 0.091299 0.013763
+ 5  6.633249610463137 0.000628 0.000095
+ 6  6.6332495807108 0.000000 0.000000
+piers@Lenovoman-G50-45:~/Documents/MA305/lab2$ python3 lab2.py
+Number to find Sq. Root of:444
+Guess:2
+ 1  112.0 110.000000 0.982143
+ 2  57.982142857142854 54.017857 0.931629
+ 3  32.81983644243037 25.162306 0.766680
+ 4  23.174120120557756 9.645716 0.416228
+ 5  21.166711794415868 2.007408 0.094838
+ 6  21.0715225126086 0.095189 0.004517
+ 7  21.071307506802405 0.000215 0.000010
+ 8  21.071307505705477 0.000000 0.000000
+piers@Lenovoman-G50-45:~/Documents/MA305/lab2$ python3 lab2.py
+Number to find Sq. Root of:4444
+Guess:2
+ 1  1112.0 1110.000000 0.998201
+ 2  557.9982014388489 554.001799 0.992838
+ 3  282.98119240766 275.017009 0.971856
+ 4  149.34270814489147 133.638484 0.894844
+ 5  89.54988431741911 59.792824 0.667704
+ 6  69.5879278698232 19.961956 0.286859
+ 7  66.72478969763085 2.863138 0.042910
+ 8  66.663361552033 0.061428 0.000921
+ 9  66.66333325000184 0.000028 0.000000
+ 10  66.66333324999583 0.000000 0.000000
+piers@Lenovoman-G50-45:~/Documents/MA305/lab2$ python3 lab2.py
+Number to find Sq. Root of:44444
+Guess:22
+ 1  11112.0 11110.000000 0.999820
+ 2  5557.999820014399 5554.000180 0.999280
+ 3  2782.998110928326 2775.001709 0.997127
+ 4  1399.4839692565001 1383.514142 0.988589
+ 5  715.6206945586009 683.863275 0.955623
+ 6  388.863110522413 326.757584 0.840289
+ 7  251.57762903031806 137.285481 0.545698
+ 8  214.11940291307252 37.458226 0.174941
+ 9  210.84291632483857 3.276487 0.015540
+ 10  210.81745811986303 0.025458 0.000121
+ 11  210.81745658270333 0.000002 0.000000
+ 12  210.8174565827033 0.000000 0.000000
+piers@Lenovoman-G50-45:~/Documents/MA305/lab2$ exit
+exit
+
+Script done on Tue 02 Oct 2018 08:08:26 PM EDT
