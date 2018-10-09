@@ -2,7 +2,7 @@
 """
 
 MA305 - Lab 2 : Piers Chapman -02OCT18 
-Purpose: To evaluate F(x) = a-b*(x**3) at N equidistant points in [0,1], and output the pairs (x, F(x)) on the screen and in the file "out.txt" for plotting.
+Purpose: Evaluate the root of an inputted number.
 
 """
 from math import *
