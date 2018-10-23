@@ -1,0 +1,143 @@
+Script started on Tue 16 Oct 2018 08:26:45 PM EDT
+piers@Lenovoman-G50-45:~/Documents/MA305/lab4$ catllab4.py
+#!/usr/bin/env python3
+
+"""
+========================================================================
+MA305 - Lab 4: Chapman, Piers - 16OCT18
+Purpose: This code uses the bisection method to determine the root for a
+function using two bounds, a and b.
+========================================================================
+"""
+
+# Define function here:
+def F(x):
+    value=x**3+x**2-3.0*x-3.0
+    #value=-1+2*x
+    return value
+
+# Get input from user and change the string input into number types:
+a,b,Tol=input(' Enter the values of a, b, Tol:').split()
+a=float(a)
+b=float(b)
+Tol=float(Tol)
+
+Nmax=1000
+
+# Print on screen:
+print('\n Searching for root in [{0: 5.2f}, {1: 5.2f}], with TOL={2:0.8g}'.format(a,b,Tol))
+print('-------------------------------------------------------')
+
+#................ Find values at endpoints:
+Fa = F(a)
+Fb = F(b)
+
+#................ Make sure Bisection is applicable, else exit
+if( Fa * Fb > 0 ):
+    print(' F(a)*F(b) > 0, Bisection NOT applicable !')
+    print(' try different a, b ? ...exiting')
+    exit
+
+#................ Initialization:
+print('  n		 r	      F(r)	     error')
+n = 0 # initialize the counter
+error = abs(b-a) # initialize the error
+
+#---------------- Begin Bisection Loop ---------------
+while error > Tol:
+    n += 1
+    r = ( a + b ) / 2
+    Fr = F(r)
+    if( Fr == 0 ):
+	print('Got lucky! root =',r,' F(r)=',Fr)
+	print(' in',n,' tries',' error <=',error/2)
+	break
+    elif(Fr*F(a) < 0 ):
+	b = r
+	Fb = Fr
+    else:
+	a = r
+	Fa = Fr
+    error = error/2 # or: = b-a
+    print('{0: 3d} {1: 15.8g} {2: 15.8g} {3: 15.8g}'.format(n, r, Fr, error))
+    # print this iterate
+    if( n > Nmax ):
+	print('....NOT done, iterations exhausted:')
+	print(' n=',n,' > Nmax=',Nmax)
+	print('try shorter [a,b], or bigger nMAX; Exiting...')
+	break
+#---------------- end of bisection loop ---------------
+print('-------------------------------------------------------')
+print(' Done! best estimate for the root:{0: 21.14g}'.format(r))
+
+piers@Lenovoman-G50-45:~/Documents/MA305/lab4$ python3_lab4.py
+ Enter the values of a, b, Tol:-1.8 -1.3 1e-6
+
+ Searching for root in [-1.80, -1.30], with TOL=1e-06
+-------------------------------------------------------
+  n		  r	       F(r)	      error
+  1	      -1.55	   0.328625	       0.25
+  2	     -1.675	 0.13120312	      0.125
+  3	    -1.7375    -0.013943359	     0.0625
+  4	   -1.70625	  0.0626521	    0.03125
+  5	  -1.721875	0.025371368	   0.015625
+  6	 -1.7296875    0.0059696846	  0.0078125
+  7	 -1.7335938   -0.0039227386	 0.00390625
+  8	 -1.7316406    0.0010394754	0.001953125
+  9	 -1.7326172   -0.0014376282    0.0009765625
+ 10	 -1.7321289  -0.00019807591   0.00048828125
+ 11	 -1.7318848   0.00042094981   0.00024414062
+ 12	 -1.7320068   0.00011149948   0.00012207031
+ 13	 -1.7320679  -4.3272587e-05   6.1035156e-05
+ 14	 -1.7320374   3.4117352e-05   3.0517578e-05
+ 15	 -1.7320526  -4.5766403e-06   1.5258789e-05
+ 16	  -1.732045	1.47706e-05   7.6293945e-06
+ 17	 -1.7320488   5.0970411e-06   3.8146973e-06
+ 18	 -1.7320507   2.6021565e-07   1.9073486e-06
+ 19	 -1.7320517  -2.1582085e-06   9.5367432e-07
+-------------------------------------------------------
+ Done! best estimate for the root:     -1.7320516586304
+piers@Lenovoman-G50-45:~/Documents/MA305/lab4$ python3 lab4.py
+ Enter the values of a, b, Tol:-1.3 -0.5 1e-6
+
+ Searching for root in [-1.30, -0.50], with TOL=1e-06
+-------------------------------------------------------
+  n		  r	       F(r)	      error
+  1	       -0.9	     -0.219		0.4
+  2	       -1.1	      0.179		0.2
+Got lucky! root = -1.0	F(r)= 0.0
+ in 3  tries  error <= 0.1
+-------------------------------------------------------
+ Done! best estimate for the root:		     -1
+piers@Lenovoman-G50-45:~/Documents/MA305/lab4$ python3 lab4.py
+ Enter the values of a, b, Tol:1.0 2.0 1e-6
+
+ Searching for root in [ 1.00,	2.00], with TOL=1e-06
+-------------------------------------------------------
+  n		  r	       F(r)	      error
+  1		1.5	     -1.875		0.5
+  2	       1.75	   0.171875	       0.25
+  3	      1.625	-0.94335938	      0.125
+  4	     1.6875	-0.40942383	     0.0625
+  5	    1.71875	-0.12478638	    0.03125
+  6	   1.734375	0.022029877	   0.015625
+  7	  1.7265625    -0.051755428	  0.0078125
+  8	  1.7304688    -0.014957249	 0.00390625
+  9	  1.7324219    0.0035126731	0.001953125
+ 10	  1.7314453   -0.0057281954    0.0009765625
+ 11	  1.7319336   -0.0011092384   0.00048828125
+ 12	  1.7321777	0.001201348   0.00024414062
+ 13	  1.7320557   4.5962495e-05   0.00012207031
+ 14	  1.7319946  -0.00053166102   6.1035156e-05
+ 15	  1.7320251  -0.00024285503   3.0517578e-05
+ 16	  1.7320404  -9.8447711e-05   1.5258789e-05
+ 17	   1.732048  -2.6242968e-05   7.6293945e-06
+ 18	  1.7320518   9.8596733e-06   3.8146973e-06
+ 19	  1.7320499    -8.19167e-06   1.9073486e-06
+ 20	  1.7320509	8.33996e-07   9.5367432e-07
+-------------------------------------------------------
+ Done! best estimate for the root:	1.7320508956909
+piers@Lenovoman-G50-45:~/Documents/MA305/lab4$ exit
+exit
+
+Script done on Tue 16 Oct 2018 08:27:39 PM EDT
