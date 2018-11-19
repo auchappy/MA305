@@ -1,0 +1,165 @@
+Script started on Tue 30 Oct 2018 05:40:44 PM EDT
+piers@Lenovoman-G50-45:~/Documents/MA305/lab6$ python3lab6.pyy
+=================Data Print=================
+Date:  5/ 1/50	Temp: 89	Humidity:60	Index: 97.35
+Date:  1/ 5/53	Temp: 56	Humidity:18	Index: 72.00
+Date:  2/25/54	Temp: 13	Humidity:30	Index: 13.00
+Date: 10/19/56	Temp: 32	Humidity: 5	Index: 32.00
+Date:  3/25/57	Temp: 30	Humidity:82	Index: 30.00
+Date:  6/18/57	Temp: 17	Humidity:24	Index: 17.00
+Date: 10/ 7/64	Temp: 10	Humidity:87	Index: 10.00
+Date:  9/23/65	Temp: 50	Humidity: 0	Index: 50.00
+Date:  4/22/66	Temp:-13	Humidity:98	Index:-13.00
+Date: 10/ 1/66	Temp:-13	Humidity:43	Index:-13.00
+Date: 11/ 9/68	Temp: 85	Humidity:74	Index: 94.27
+Date: 10/12/69	Temp: -5	Humidity:32	Index: -5.00
+Date: 11/ 9/73	Temp:-16	Humidity:60	Index:-16.00
+Date:  7/17/76	Temp: 43	Humidity:36	Index: 43.00
+Date:  8/ 8/77	Temp: 88	Humidity:68	Index: 99.13
+Date:  1/17/78	Temp: 38	Humidity:24	Index: 38.00
+Date:  9/18/78	Temp:  9	Humidity: 0	Index:	9.00
+Date:  7/11/79	Temp: 53	Humidity:28	Index: 53.00
+Date:  8/15/79	Temp: -7	Humidity:82	Index: -7.00
+Date: 11/15/80	Temp: 49	Humidity:51	Index: 49.00
+Date: 10/14/81	Temp: 95	Humidity:15	Index: 90.63
+Date:  3/11/82	Temp: 42	Humidity:67	Index: 42.00
+Date:  4/ 9/82	Temp: 80	Humidity:18	Index: 78.48
+Date: 10/10/82	Temp: -4	Humidity:25	Index: -4.00
+Date: 10/13/84	Temp: 21	Humidity:11	Index: 21.00
+Date: 11/ 8/84	Temp:-26	Humidity:11	Index:-26.00
+Date:  1/12/85	Temp: 40	Humidity:81	Index: 40.00
+Date: 12/13/85	Temp:-10	Humidity:47	Index:-10.00
+Date:  5/20/88	Temp: 92	Humidity:91	Index:132.35
+Date: 12/27/88	Temp: 57	Humidity:12	Index: 66.27
+Date:  3/25/89	Temp: 36	Humidity:29	Index: 36.00
+Date:  8/22/91	Temp:  3	Humidity:22	Index:	3.00
+Date:  2/ 9/93	Temp: 60	Humidity: 4	Index: 60.10
+Date:  4/ 5/93	Temp: 28	Humidity:46	Index: 28.00
+Date:  9/10/93	Temp: 51	Humidity:31	Index: 51.00
+Date: 11/26/93	Temp: 29	Humidity:57	Index: 29.00
+Date:  2/ 2/96	Temp:-16	Humidity:48	Index:-16.00
+Date: 11/22/96	Temp:-15	Humidity:44	Index:-15.00
+Date:  4/14/97	Temp:-22	Humidity:86	Index:-22.00
+Date:  8/21/99	Temp:  7	Humidity:89	Index:	7.00
+============================================
+Date: 11/ 8/84	Temp:-26	Humidity:11	Index:-26.00	Lowest Temperature
+Date:  5/20/88	Temp: 92	Humidity:91	Index:132.35	Highest Heat Index
+============================================
+Average Temperature:28.9	Average Humidity:43.4	Average Heat Index: 31.02
+Days below 32: 10	Days above 50: 11
+piers@Lenovoman-G50-45:~/Documents/MA305/lab6$ cat6lab6.py
+#!/usr/bin/env python3
+import sys
+"""
+==========================================
+MA305 - LAB 6: CHAPMAN, PIERS - 29OCT18
+PURPOSE: Read data into arrays enabling extraction of information.
+==========================================
+"""
+
+f = open('data6.txt','r')
+f.readline()
+data = f.readlines()
+
+D = []
+T = []
+H = []
+
+#Begin functions
+def max(listIn = []):
+	oldMax = listIn[0]
+	newMax = 0
+	index  = 0
+	for i in range(1,len(listIn)):
+		newMax = listIn[i]
+		if (newMax > oldMax):
+			oldMax = newMax
+			index = i
+	return oldMax, index
+
+def min(listIn = []):
+	oldMin = listIn[0]
+	newMin = 0
+	index  = 0
+	for i in range(len(listIn)):
+		newMin = listIn[i]
+		if (newMin < oldMin):
+			oldMin = newMin
+			index = i
+	return oldMin, index
+
+def avg(listIn = []):
+	temp = []
+	for i in range(len(listIn)):
+		temp.append(int(listIn[i]))
+	avg = sum(temp) / len(listIn)
+	return avg
+
+def heat_index(T,H):
+	if(T > 55):
+		HI = -42.379 + 2.04901523*T + 10.14333127*H - 0.22475541*T*H - 6.83783e-3*T*T - 5.481717e-2*H*H + 1.22874e-3*T*T*H + 8.5282e-4*T*H*H - 1.99e-6*T*T*H*H
+	else:
+		HI = T
+	return HI
+
+def date(x):
+	day   = (x%100)
+	month = (x//100)%100
+	year  = (x//10000)
+	return day, month, year
+
+
+#Begin code
+for line in data:
+	Linelist = line.split()
+	D.append(int(Linelist[0]))
+	T.append(int(Linelist[1]))
+	H.append(int(Linelist[2]))
+	#print(Linelist)
+f.close()
+print('=================Data Print=================')
+cBelow = 0
+cAbove = 0
+avgT = avg(T)
+avgH = avg(H)
+HI = []
+for i in range(len(T)):
+	if (T[i] < 32):
+		if(T[i] > 0):
+			cBelow+=1
+	if (T[i] > 50):
+		cAbove+=1
+	HI.append(heat_index(T[i],H[i]))
+
+for i in range(len(T)):
+	day, month, year = date(D[i])
+	temp = int(T[i])
+	hum = int(H[i])
+	hi = heat_index(temp,hum)
+	print('Date: {0:2}/{1:2}/{2:2}\tTemp:{3:3}\tHumidity:{4:2}\tIndex:{5:6.2f}'.format(month,day,year,temp,hum,hi))
+print('============================================')
+
+#lowest temperature
+tMin, tMinIndex = min(T)
+tMinDay, tMinMonth, tMinYear = date(D[tMinIndex])
+heatIndexDay = HI[tMinIndex]
+humDay = H[tMinIndex]
+print('Date: {0:2}/{1:2}/{2:2}\tTemp:{3:3}\tHumidity:{4:2}\tIndex:{5:6.2f}\tLowest Temperature'.format(tMinMonth,tMinDay,tMinYear,tMin,humDay,heatIndexDay))
+
+#max heat_index
+hiMax, hiMaxIndex = max(HI)
+hiMaxDay, hiMaxMonth, hiMaxYear = date(D[hiMaxIndex])
+tempHIMax = T[hiMaxIndex]
+humHIMax = H[hiMaxIndex]
+print('Date: {0:2}/{1:2}/{2:2}\tTemp:{3:3}\tHumidity:{4:2}\tIndex:{5:6.2f}\tHighest Heat Index'.format(hiMaxMonth,hiMaxDay,hiMaxYear,tempHIMax,humHIMax,hiMax))
+
+#break
+print('============================================')
+
+#averages
+avgHI = avg(HI)
+print('Average Temperature:{0:3}\tAverage Humidity:{1:2}\tAverage Heat Index:{2:6.2f}'.format(avgT,avgH,avgHI))
+print('Days below 32:{0:3}\tDays above 50:{1:3}'.format(cBelow,cAbove))piers@Lenovoman-G50-45:~/Documents/MA305/lab6$ exit
+exit
+
+Script done on Tue 30 Oct 2018 05:41:14 PM EDT

@@ -7,8 +7,8 @@ MA305 - Lab 5: Chapman, Piers - 22OCT18
 Purpose: . . . 
 ======================================================================== 
 """
-#f = open('dat5a.txt','r')
-f = sys.stdin
+f = open('dat5a.txt','r')
+#f = sys.stdin
 f.readline()
 data=f.readlines()
 print(data)

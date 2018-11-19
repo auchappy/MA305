@@ -1,0 +1,128 @@
+Script started on Tue 30 Oct 2018 06:27:44 PM EDT
+piers@Lenovoman-G50-45:~/Documents/MA305/cw8$ cat cw8.py
+#!/usr/bin/env python
+from math import *
+from mySums import *
+
+def f(x):
+    f=3*x**2+1
+    return f
+
+
+a=0.0
+b=1.0
+n=int(input('Enter the number of rectangles n:'))
+h=(b-a)/n
+
+print()
+print("  i	    xi		f(xi)	")
+left_sum = lsum(f,a,n,h)
+exact=2
+print()
+print("Left-Sum Approximation:",left_sum)
+abs_error=abs(left_sum-exact)
+print ("	Absolute Error:",abs_error)
+print()
+
+mid_sum = msum(f,a,n,h)
+print()
+print("Mid-Sum Approximation:",mid_sum)
+abs_error=abs(mid_sum-exact)
+print ("	Absolute Error:",abs_error)
+print()
+
+right_sum = rsum(f,a,n,h)
+print()
+print("Right-Sum Approximation:",right_sum)
+abs_error=abs(right_sum-exact)
+print ("	Absolute Error:",abs_error)
+print()
+#rel_error=100*abs(left_sum-exact)/abs(exact)
+#print ("Relative Percentage Error:",rel_error)
+
+
+piers@Lenovoman-G50-45:~/Documents/MA305/cw8$ cat mySums.py
+#!/user/bin/env python
+'''
+==============================================================
+MA305 - CW8 : Piers Chapman - 29OCT18
+Purpose: To determine the riemans sum of a function with relation to the number of 'boxes' utilised.
+==============================================================
+'''
+
+def lsum(f,a,n,h):
+	left_sum = 0
+	for i in range(n):
+		xi = a+i*h
+		fi=f(xi)
+		print('{0:3d}	 {1:10.5f}   {2:10.5f}'.format(i,xi,fi))
+		left_sum += h*fi
+	return left_sum
+
+def msum(f,a,n,h):
+	mid_sum = 0
+	for i in range(n):
+		xi = a+0.5*h+i*h
+		fi=f(xi)
+		print('{0:3d}	 {1:10.5f}   {2:10.5f}'.format(i,xi,fi))
+		mid_sum += h*fi
+	return mid_sum
+
+def rsum(f,a,n,h):
+	right_sum = 0
+	for i in range(1,n+1):
+		xi = a+i*h
+		fi=f(xi)
+		print('{0:3d}	 {1:10.5f}   {2:10.5f}'.format(i,xi,fi))
+		right_sum += h*fi
+	return right_sum
+piers@Lenovoman-G50-45:~/Documents/MA305/cw8$ python3cw8.py
+Enter the number of rectangles n:10
+
+  i	     xi 	 f(xi)
+  0	  0.00000      1.00000
+  1	  0.10000      1.03000
+  2	  0.20000      1.12000
+  3	  0.30000      1.27000
+  4	  0.40000      1.48000
+  5	  0.50000      1.75000
+  6	  0.60000      2.08000
+  7	  0.70000      2.47000
+  8	  0.80000      2.92000
+  9	  0.90000      3.43000
+
+Left-Sum Approximation: 1.8550000000000002
+	Absolute Error: 0.1449999999999998
+
+  0	  0.05000      1.00750
+  1	  0.15000      1.06750
+  2	  0.25000      1.18750
+  3	  0.35000      1.36750
+  4	  0.45000      1.60750
+  5	  0.55000      1.90750
+  6	  0.65000      2.26750
+  7	  0.75000      2.68750
+  8	  0.85000      3.16750
+  9	  0.95000      3.70750
+
+Mid-Sum Approximation: 1.9975000000000003
+	Absolute Error: 0.0024999999999997247
+
+  1	  0.10000      1.03000
+  2	  0.20000      1.12000
+  3	  0.30000      1.27000
+  4	  0.40000      1.48000
+  5	  0.50000      1.75000
+  6	  0.60000      2.08000
+  7	  0.70000      2.47000
+  8	  0.80000      2.92000
+  9	  0.90000      3.43000
+ 10	  1.00000      4.00000
+
+Right-Sum Approximation: 2.1550000000000002
+	Absolute Error: 0.15500000000000025
+
+piers@Lenovoman-G50-45:~/Documents/MA305/cw8$ exit
+exit
+
+Script done on Tue 30 Oct 2018 06:28:22 PM EDT
