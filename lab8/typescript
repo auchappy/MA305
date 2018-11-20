@@ -1,0 +1,277 @@
+Script started on Mon 19 Nov 2018 08:12:58 PM EST
+]0;chapmanp@wxsession3:~/Documents/MA305/lab8[?1034h[bash chapmanp@wxsession3 ~/Documents/MA305/lab8 ]$ l[Kcat lab8a.py 
+#!usr/bin/env python3
+"""
+==============================
+Chapman, Piers - 15NOV18
+Purpose: Takes an array and computes sum, product, min, max , avg, variance and standard deviation
+==============================
+"""
+
+import numpy as np
+from math import *
+
+
+#Functions
+def x_mean(x):
+	summ = 0
+	for i in range(len(x)):
+		summ += x[i]
+	return summ/len(x)
+
+def x_var(x):
+	varr = 0
+	for i in range(len(x)):
+		varr += x[i]**2
+	varr = varr/len(x)
+	varr -= x_avg(x)**2
+	return varr
+
+def x_prod(x):
+	prod = 1
+	for i in range(0,len(x)):
+		prod *= x[i]
+	return prod
+
+def greaterThanAvg(x,y):
+	greaterCount = 0
+	for i in range(len(x)):
+		if (x[i] > y):
+			greaterCount+=1
+	lesserCount = len(x) - greaterCount
+	return greaterCount, lesserCount
+
+rand_x = np.random.rand(15)
+
+#for i in range(0,len(rand_x),5):
+#	print('{0:2.3f}\t{1:2.3f}\t{2:2.3f}\t{3:2.3f}\t{4:2.3f}'.format(rand_x[i],rand_x[i+1],rand_x[i+2],rand_x[i+4],rand_x[i+4]))
+
+#NumPy Calculations
+xavg = np.mean(rand_x)
+xsumm = np.sum(rand_x)
+xprod = x_prod(rand_x)#np.prod(rand_x)
+xvar = np.var(rand_x)
+xstd = np.std(rand_x)
+xmax = np.max(rand_x)
+xmax_loc = np.argmax(rand_x)
+xmin = np.min(rand_x)
+xmin_loc = np.argmin(rand_x)
+
+#print(rand_x)
+print()
+
+print('              i             x')
+for i in range(len(rand_x)):
+	print('             {0:2d}         {1:5.5f}'.format(i,rand_x[i]))
+print('=========================================')
+print('X Sum:{0:3.5f} X Avg:{1:3.5f} X Prod:{2:3.5f}e-6'.format(xsumm,xavg,xprod*10**6))
+print('     X Max:{0:3.5f} X Max Loc:{1:2d}'.format(xmax,xmax_loc))
+print('     X Min:{0:3.5f} X Min Loc:{1:2d}'.format(xmin,xmin_loc))
+print('=========================================')
+
+sort_x = sorted(rand_x)
+rev_x = sorted(rand_x, reverse=True)
+print('     Low to High      High to Low')
+for i in range(len(rand_x)):
+	print('\t{0:3.5f}\t\t{1:3.5f}'.format(sort_x[i],rev_x[i]))
+print()
+countAbove, countBelow = greaterThanAvg(rand_x,xavg)
+medAbove, medBelow = greaterThanAvg(rand_x,np.median(rand_x))
+print('{0:2d} numbers below average of {1:1.5f} and {2:2d} above'.format(countBelow,xavg,countAbove))
+print('{0:2d} numbers below median of {1:1.5f} and {2:2d} above'.format(medBelow,np.median(rand_x),medAbove))
+]0;chapmanp@wxsession3:~/Documents/MA305/lab8[bash chapmanp@wxsession3 ~/Documents/MA305/lab8 ]$ python lab8a.py 
+
+              i             x
+              0         0.44933
+              1         0.27615
+              2         0.66052
+              3         0.81102
+              4         0.39313
+              5         0.17001
+              6         0.41057
+              7         0.20358
+              8         0.69337
+              9         0.08964
+             10         0.59000
+             11         0.56541
+             12         0.01137
+             13         0.99417
+             14         0.85347
+=========================================
+X Sum:7.17176 X Avg:0.47812 X Prod:0.07430e-6
+     X Max:0.99417 X Max Loc:13
+     X Min:0.01137 X Min Loc:12
+=========================================
+     Low to High      High to Low
+	0.01137		0.99417
+	0.08964		0.85347
+	0.17001		0.81102
+	0.20358		0.69337
+	0.27615		0.66052
+	0.39313		0.59000
+	0.41057		0.56541
+	0.44933		0.44933
+	0.56541		0.41057
+	0.59000		0.39313
+	0.66052		0.27615
+	0.69337		0.20358
+	0.81102		0.17001
+	0.85347		0.08964
+	0.99417		0.01137
+
+ 8 numbers below average of 0.47812 and  7 above
+ 8 numbers below median of 0.44933 and  7 above
+]0;chapmanp@wxsession3:~/Documents/MA305/lab8[bash chapmanp@wxsession3 ~/Documents/MA305/lab8 ]$ cat lab8b.py 
+#!usr/bin/env python3
+"""
+==============================
+Chapman, Piers - 15NOV18
+Purpose: Import data from two files and create histograms.
+==============================
+"""
+
+import numpy as np
+import pylab as plt
+
+def datLoad(name):
+	f = open(name)
+	dat = f.readlines()
+	datRet = []
+	for line in dat:
+		Line = line.split()
+		for i in range(0,5):
+			datRet.append(float(Line[i]))
+	f.close()
+	return datRet	 
+
+male = datLoad('dataM.txt')
+fmale = datLoad('dataF.txt')
+mMean = np.mean(male)
+mMed = np.median(male)
+mDevi = np.std(male)
+fMean = np.mean(fmale)
+fMed = np.median(fmale)
+fDevi = np.std(fmale)
+fmale = datLoad('dataF.txt')
+
+print('==========================================================')
+print()
+print('  Male Mean: {0:5.2f}cm Median: {1:5.2f}cm Deviation: {2:5.2f}cm'.format(mMean,mMed,mDevi))
+print('   Male Max: {0:5.2f}cm    Min: {1:5.2f}cm'.format(np.max(male),np.min(male)))
+print('Female Mean: {0:5.2f}cm Median: {1:5.2f}cm Deviation: {2:5.2f}cm'.format(fMean,fMed,fDevi)) 
+print(' Female Max: {0:5.2f}cm    Min: {1:5.2f}cm'.format(np.max(fmale),np.min(fmale)))
+print()
+print('==========================================================')
+
+np.histogram(male,bins=20,range=(110,220))
+np.histogram(fmale,bins=20,range=(110,220))
+plt.hist([male,fmale],bins=20,range=(120,220),label=['Male','Female'])
+plt.legend(loc='upper right')
+plt.savefig('plot.pdf')
+]0;chapmanp@wxsession3:~/Documents/MA305/lab8[bash chapmanp@wxsession3 ~/Documents/MA305/lab8 ]$ python lab8b.py 
+==========================================================
+
+  Male Mean: 178.79cm Median: 179.00cm Deviation: 10.83cm
+   Male Max: 208.30cm    Min: 138.50cm
+Female Mean: 164.08cm Median: 164.40cm Deviation:  7.39cm
+ Female Max: 186.40cm    Min: 141.60cm
+
+==========================================================
+Traceback (most recent call last):
+  File "lab8b.py", line 44, in <module>
+    plt.hist([male,fmale],bins=20,range=(120,220),label=['Male','Female'])
+  File "/usr/share/anaconda35/lib/python3.6/site-packages/matplotlib/pyplot.py", line 3117, in hist
+    ax = gca()
+  File "/usr/share/anaconda35/lib/python3.6/site-packages/matplotlib/pyplot.py", line 984, in gca
+    return gcf().gca(**kwargs)
+  File "/usr/share/anaconda35/lib/python3.6/site-packages/matplotlib/pyplot.py", line 601, in gcf
+    return figure()
+  File "/usr/share/anaconda35/lib/python3.6/site-packages/matplotlib/pyplot.py", line 548, in figure
+    **kwargs)
+  File "/usr/share/anaconda35/lib/python3.6/site-packages/matplotlib/backend_bases.py", line 161, in new_figure_manager
+    return cls.new_figure_manager_given_figure(num, fig)
+  File "/usr/share/anaconda35/lib/python3.6/site-packages/matplotlib/backend_bases.py", line 167, in new_figure_manager_given_figure
+    canvas = cls.FigureCanvas(figure)
+  File "/usr/share/anaconda35/lib/python3.6/site-packages/matplotlib/backends/backend_qt5agg.py", line 24, in __init__
+    super(FigureCanvasQTAgg, self).__init__(figure=figure)
+  File "/usr/share/anaconda35/lib/python3.6/site-packages/matplotlib/backends/backend_qt5.py", line 234, in __init__
+    _create_qApp()
+  File "/usr/share/anaconda35/lib/python3.6/site-packages/matplotlib/backends/backend_qt5.py", line 125, in _create_qApp
+    raise RuntimeError('Invalid DISPLAY variable')
+RuntimeError: Invalid DISPLAY variable
+]0;chapmanp@wxsession3:~/Documents/MA305/lab8[bash chapmanp@wxsession3 ~/Documents/MA305/lab8 ]$ cat lab8c.py 
+#!usr/bin/env python3
+"""
+=====================================
+Chapman, Piers - 15NOV18
+Purpose: Use a matrix to determine the 1-, infinite, and Frobenious norms. 
+=====================================
+"""
+
+import numpy as np
+import time as clock
+
+start = clock.time()
+
+def froben(trix):
+	shape = trix.shape
+	row = shape[0]
+	col = shape[1]
+	frob = 0
+	for m in range(row):
+		for n in range(col):
+			frob+=trix[m,n]**2
+
+	frob = np.sqrt(frob)
+	return frob
+
+def norm(trix):
+	shape = trix.shape
+	row = shape[0]
+	col = shape[1]
+	inf = 0
+	for i in range(row):
+		count = 0
+		for j in range(col):
+			count+=trix[i,j]
+		if (count>inf):
+			inf = count
+	return inf
+
+def infinite(trix):
+	shape = trix.shape
+	row = shape[0]
+	col = shape[1]
+	first = 0
+	for i in range(col):
+		count = 0
+		for j in range(row):
+			count+=trix[j,i]
+		if(count>first):
+			first = count
+	return first
+
+A = np.fromfunction(lambda x,y : 2*x+y, (4,5))
+B = A.transpose()
+C = A.dot(B)
+#print(A)
+#print(B)
+#print(C)
+print()
+print('     Frobenious for C:    {0:10.5f} Norm:    {1:10.5f} Infinite:    {2:10.5f}'.format(froben(C),norm(C),infinite(C)))
+matrix = np.fromfunction(lambda x,y : 2*x+y, (1000,1000))
+print('Frobenious for Matrix: {0:10.5f} Norm: {1:10.5f} Infinite: {2:10.5f}'.format(froben(matrix),norm(matrix),infinite(matrix)))
+print()
+print('Code Run Time:',clock.time() - start)
+]0;chapmanp@wxsession3:~/Documents/MA305/lab8[bash chapmanp@wxsession3 ~/Documents/MA305/lab8 ]$ python lab8c.py 
+
+     Frobenious for C:     633.71918 Norm:     840.00000 Infinite:     840.00000
+Frobenious for Matrix: 1631615.30392 Norm: 2497500.00000 Infinite: 1998000.00000
+
+Code Run Time: 1.0132153034210205
+]0;chapmanp@wxsession3:~/Documents/MA305/lab8[bash chapmanp@wxsession3 ~/Documents/MA305/lab8 ]$ end
+bash: end: command not found
+]0;chapmanp@wxsession3:~/Documents/MA305/lab8[bash chapmanp@wxsession3 ~/Documents/MA305/lab8 ]$ exit
+exit
+
+Script done on Mon 19 Nov 2018 08:13:49 PM EST

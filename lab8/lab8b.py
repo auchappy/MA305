@@ -1,13 +1,13 @@
 #!usr/bin/env python3
 """
 ==============================
-Chapman, Piers - 05NOV18
-Purpose: Use the trapezoidal rule to approximate the area of a curve
+Chapman, Piers - 15NOV18
+Purpose: Import data from two files and create histograms.
 ==============================
 """
 
 import numpy as np
-from matplotlib import pylab as plt
+import pylab as plt
 
 def datLoad(name):
 	f = open(name)
@@ -39,11 +39,8 @@ print(' Female Max: {0:5.2f}cm    Min: {1:5.2f}cm'.format(np.max(fmale),np.min(f
 print()
 print('==========================================================')
 
-np.histogram(male,bins=20,range=(np.min(male),np.max(male)))
-np.histogram(fmale,bins=20,range=(np.min(fmale),np.max(fmale)))
+np.histogram(male,bins=20,range=(110,220))
+np.histogram(fmale,bins=20,range=(110,220))
 plt.hist([male,fmale],bins=20,range=(120,220),label=['Male','Female'])
 plt.legend(loc='upper right')
 plt.savefig('plot.pdf')
-pylab.show()
-
-
