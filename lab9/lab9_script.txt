@@ -1,3 +1,5 @@
+Script started on Tue 20 Nov 2018 09:57:44 AM EST
+[bash chapmanp@wxsession3 ~/Documents/MA305/lab9 ]$ cat lab9.py
 #!/usr/bin/env python3
 import numpy as np
 import matplotlib.pyplot as plt
@@ -35,14 +37,14 @@ def intercept(x,y,m):
 #Perform the sum of squares... thing
 def sumSquares(x,y,p1,n):
 	sum = 0
-	for i in range(n):  
+	for i in range(n):
 		z=np.polyval(p1,x[i])
 		sum += (y[i]-z)**2
 	return sum
 #Get the standard error
 def stdErr(s,n):
 	return np.sqrt((s/(n-2)))
-	
+
 #Pull data from the file. Skip the first three rows.
 x1,y1,x2,y2,x3,y3,x4,y4 = np.loadtxt('data9.txt',skiprows=3,unpack=True)
 
@@ -130,3 +132,16 @@ plt.xlabel('$X_4$')
 plt.ylabel('$Y_4$')
 plt.show()
 fig.savefig('figure_4.pdf')
+[bash chapmanp@wxsession3 ~/Documents/MA305/lab9 ]$ python lab9.py
+
+x1y1 Slope:0.50009 Intercept:3.00009 Sum of Squares:13.76269 StdError:1.23660
+x2y2 Slope:0.50000 Intercept:3.00091 Sum of Squares:13.77629 StdError:1.23721
+x3y3 Slope:0.49973 Intercept:3.00245 Sum of Squares:13.75619 StdError:1.23631
+x4y4 Slope:0.49991 Intercept:3.00173 Sum of Squares:13.74249 StdError:1.23570
+
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-chapmanp'
+QXcbConnection: XCB error: 145 (Unknown), sequence: 171, resource id: 0, major code: 139 (Unknown), minor code: 20
+[bash chapmanp@wxsession3 ~/Documents/MA305/lab9 ]$ exit
+exit
+
+Script done on Tue 20 Nov 2018 09:58:02 AM EST
