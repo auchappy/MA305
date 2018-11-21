@@ -4,10 +4,9 @@ import matplotlib.pyplot as plt
 
 '''
 =========================================
-Piers Chapman - 20NOV18: Lab 9
-Purpose: This lab receives an input from
-two graphs and plots points according to
-the data received.
+Piers Chapman - 20NOV18: Classwork 8
+Purpose: This classwork receives an input from
+two graphs and plots points
 =========================================
 '''
 
@@ -45,7 +44,7 @@ def stdErr(s,n):
 	return np.sqrt((s/(n-2)))
 	
 #Pull data from the file. Skip the first three rows.
-x1,y1,x2,y2,x3,y3,x4,y4 = np.loadtxt('data9.txt',skiprows=3,unpack=True)
+x1,y1,x2,y2,x3,y3 = np.loadtxt('data9.txt',skiprows=3,unpack=True)
 
 #plt.plot(x1,y1,'o')
 #plt.show()
